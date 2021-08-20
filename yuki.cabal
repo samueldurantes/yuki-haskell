@@ -1,0 +1,33 @@
+cabal-version:       >=1.10
+
+name:                yuki
+version:             0.1.0.0
+-- synopsis:
+-- description:
+-- bug-reports:
+license:             MIT
+license-file:        LICENSE
+author:              Samuel Durante
+maintainer:          samueldurante.h@gmail.com
+-- copyright:
+-- category:
+build-type:          Simple
+
+executable yuki
+  main-is:             Main.hs
+  build-depends:       base >=4.14 && <4.15
+                     , dotenv
+                     , text
+                     , yuki
+  hs-source-dirs:      app
+
+library
+  main-is:             Yuki.hs
+  exposed-modules:     Yuki
+  build-depends:       base >=4.14 && <4.15
+                     , discord-haskell <= 1.8.8
+                     , text
+                     , unliftio
+  hs-source-dirs:      lib
+  default-language:    Haskell2010
+  default-extensions:  OverloadedStrings
