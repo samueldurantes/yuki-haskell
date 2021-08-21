@@ -1,3 +1,4 @@
-module Yuki.Commands where
+module Yuki.Commands ( ping
+                     ) where
 
--- TODO(#1) - Make a cool structure for commands
+import Yuki.Commands.Ping (ping)

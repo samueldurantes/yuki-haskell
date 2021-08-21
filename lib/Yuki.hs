@@ -1,15 +1,19 @@
 module Yuki (login) where
 
-import Data.Text
+import Control.Monad (when, void)
+import qualified Data.Text as T
 import qualified Data.Text.IO as TextIO
 
 import Discord
 import Discord.Types
--- import qualified Discord.Requests as R
+import qualified Discord.Requests as R
 
-login :: Text -> IO ()
+import Yuki.Commands (ping)
+
+login :: T.Text -> IO ()
 login token = do
   t <- runDiscord $ def { discordToken = token
+                        , discordOnEvent = eventHandler
                         , discordOnStart = startHandler
                         , discordOnLog = \_ -> TextIO.putStrLn "Connected to Discord!"
                         }
@@ -28,3 +32,15 @@ startHandler = do
                               , updateStatusOptsAFK = False
                               }
   sendCommand (UpdateStatus opts)
+
+eventHandler :: Event -> DiscordHandler ()
+eventHandler event = case event of
+  MessageCreate m -> when (not (fromBot m) && forBot m) $ do
+    void $ restCall (ping (m))
+  _ -> return ()
+
+forBot :: Message -> Bool
+forBot = ("]" `T.isPrefixOf`) . T.toLower . messageText
+
+fromBot :: Message -> Bool
+fromBot m = userIsBot (messageAuthor m)
