@@ -36,7 +36,7 @@ startHandler = do
 eventHandler :: Event -> DiscordHandler ()
 eventHandler event = case event of
   MessageCreate m -> when (not (fromBot m) && forBot m) $ do
-    void $ restCall (ping (m))
+    void $ restCall (ping m)
   _ -> return ()
 
 forBot :: Message -> Bool
