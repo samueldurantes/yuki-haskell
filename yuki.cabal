@@ -24,6 +24,7 @@ executable yuki
 library
   main-is:             Yuki.hs
   exposed-modules:     Yuki
+                     , Yuki.Reply
                      , Yuki.Commands
                      , Yuki.Commands.Ping
   build-depends:       base >=4.14 && <4.15
