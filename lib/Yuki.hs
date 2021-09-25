@@ -21,7 +21,7 @@ login token = do
 
 startHandler :: DiscordHandler ()
 startHandler = do
-  let activity = Activity { activityName = "Hi there!"
+  let activity = Activity { activityName = "$"
                           , activityType = ActivityTypeListening
                           , activityUrl = Nothing
                           }
@@ -40,7 +40,7 @@ eventHandler event = case event of
   _ -> return ()
 
 forBot :: Message -> Bool
-forBot = ("]" `T.isPrefixOf`) . T.toLower . messageText
+forBot = ("$" `T.isPrefixOf`) . T.toLower . messageText
 
 fromBot :: Message -> Bool
 fromBot m = userIsBot (messageAuthor m)
