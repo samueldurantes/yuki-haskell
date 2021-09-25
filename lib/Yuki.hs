@@ -8,7 +8,7 @@ import Discord
 import Discord.Types
 import qualified Discord.Requests as R
 
-import Yuki.Commands (ping)
+import Yuki.Commands (ping, weather, verifyCommand, Commands(..))
 
 login :: T.Text -> IO ()
 login token = do
@@ -36,7 +36,10 @@ startHandler = do
 eventHandler :: Event -> DiscordHandler ()
 eventHandler event = case event of
   MessageCreate m -> when (not (fromBot m) && forBot m) $ do
-    ping m
+    case verifyCommand (T.tail (messageText m)) of
+      Just Ping -> ping m
+      Just Weather -> weather m
+      Nothing -> return ()
   _ -> return ()
 
 forBot :: Message -> Bool
